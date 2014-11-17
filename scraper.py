@@ -26,7 +26,7 @@ compare_date= scraperwiki.sqlite.select('last_name_collection from runtime_info'
 compare_date = str(compare_date[0]['last_name_collection'])
 
 #starturl = 'http://www.europarl.europa.eu/members/public/yourMep/search.do?name=*&partNumber=1&language=EN' OLD
-starturl = 'http://www.europarl.europa.eu/meps/en/search.html?mepId=&mepName=*&partNumber'
+starturl = 'http://www.europarl.europa.eu/meps/en/full-list.html?filter=all&leg='
 regex_id = re.compile("id=(\d.*)")
 regex_id2 = re.compile("&id=(\d.*)")
 regex_page_number = re.compile("&partNumber=(\d+)")
