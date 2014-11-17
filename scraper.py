@@ -25,7 +25,8 @@ days_between_info_collection = int(7) #for now - will change to 7 when everythin
 compare_date= scraperwiki.sqlite.select('last_name_collection from runtime_info')
 compare_date = str(compare_date[0]['last_name_collection'])
 
-starturl = 'http://www.europarl.europa.eu/members/public/yourMep/search.do?name=*&partNumber=1&language=EN'
+#starturl = 'http://www.europarl.europa.eu/members/public/yourMep/search.do?name=*&partNumber=1&language=EN' OLD
+starturl = 'http://www.europarl.europa.eu/meps/en/search.html?mepId=&mepName=*&partNumber'
 regex_id = re.compile("id=(\d.*)")
 regex_id2 = re.compile("&id=(\d.*)")
 regex_page_number = re.compile("&partNumber=(\d+)")
