@@ -216,8 +216,9 @@ def info_collection(url,firstname,lastname,id):
     record['lastname'] = lastname
     record['country'] = country
     #record['country'] = country[0].strip()
-    record['en_party_name'] = party[0].text_content().strip()
-    record['en_party_role'] = party[1].text_content().strip()
+    record['en_party_name'] = party
+    #record['en_party_name'] = party[0].text_content().strip()
+    #record['en_party_role'] = party[1].text_content().strip()
     national_party_birth = root.xpath ('//comment()[.=" birth date, birth place"]//../text()')
     birth_place = national_party_birth[2].partition(',')[2].strip()
     birth_date = regex_birth_date.findall(national_party_birth[2].strip())
