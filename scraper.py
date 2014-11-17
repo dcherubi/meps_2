@@ -215,16 +215,16 @@ def info_collection(url,firstname,lastname,id):
     record['firstname'] = firstname
     record['lastname'] = lastname
     record['country'] = country
-    #record['country'] = country[0].strip()
+    #record['country'] = country[0].strip() DAVIDE
     record['en_party_name'] = party
-    #record['en_party_name'] = party[0].text_content().strip()
-    #record['en_party_role'] = party[1].text_content().strip()
+    #record['en_party_name'] = party[0].text_content().strip() DAVIDE
+    #record['en_party_role'] = party[1].text_content().strip() DAVIDE
     national_party_birth = root.xpath ('//comment()[.=" birth date, birth place"]//../text()')
-    birth_place = national_party_birth[2].partition(',')[2].strip()
-    birth_date = regex_birth_date.findall(national_party_birth[2].strip())
-    record['birth_date'] = birth_date[0]
-    record['birth_place'] = birth_place
-    record['national_party_name'] = national_party_birth[1].strip() #.encode('ISO-8859-1')
+    #birth_place = national_party_birth[2].partition(',')[2].strip() DAVIDE
+    #birth_date = regex_birth_date.findall(national_party_birth[2].strip()) DAVIDE
+    #record['birth_date'] = birth_date[0] DAVIDE
+    #record['birth_place'] = birth_place DAVIDE
+    r#ecord['national_party_name'] = national_party_birth[1].strip() #.encode('ISO-8859-1') DAVIDE
     #print national_party[0].strip()   #.encode('ISO-8859-1') ??????
     member = root.xpath ('//td [contains(text(),"Member") and @colspan="2"]/../..//td[contains(@style,"width: 98%")]')
     if member:
