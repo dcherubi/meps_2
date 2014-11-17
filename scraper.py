@@ -57,6 +57,7 @@ def name_collection(page):
         record['firstname'] = name[1]
         url = mp[0].get('href')
         id = regex_id2.findall(url)
+        print id[0]
         url = 'http://www.europarl.europa.eu/members/public/yourMep/view.do?id=' + id[0]
         record['detail_url'] = url
         record['id'] = id[0]
