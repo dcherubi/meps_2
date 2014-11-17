@@ -272,7 +272,7 @@ def info_collection(url,firstname,lastname,id):
 # START
 print 'Last name collection was %d days ago' % dateDiff.days
 
-if int(dateDiff.days) > days_between_name_collection: # was <
+if int(dateDiff.days) < days_between_name_collection: 
     print "Davide: No name collection today. Next name collection in" , 30 - dateDiff.days, " day(s)"
     print 
     print 'Get MEPs that have not been updated in 7+ days (or so) and fetch their info'
@@ -293,6 +293,7 @@ if int(dateDiff.days) > days_between_name_collection: # was <
             print name['firstname'], name['lastname'],  " is up to date. On to the next one"
         else:
             print name['firstname'], name['lastname'],  " Is not up to date. Let's process ..."
+            print "URL ", name['detail_url']
             info_collection(name['detail_url'],name['firstname'],name['lastname'],name['id'])
 else:
 
