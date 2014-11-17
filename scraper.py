@@ -105,104 +105,104 @@ def question_collection(activity_url,id,firstname,lastname):
         else:
             return
 
-#OPINIONS COLLECTION
-def opinion_collection(activity_url,id,firstname,lastname):
-    html = scraperwiki.scrape(activity_url)
-    root = lxml.html.fromstring(html)
-    opinions = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
-    for o in opinions:
-        opinions_record = {}
-        opinions_record['subject'] = o[4][0].text.strip()
-        opinions_record['committee'] = o[5][0].text.strip()
-        opinions_record['date'] = o[2][0].text.strip()
-        opinions_record['word_url'] = 'http://www.europarl.europa.eu' + o[2][1][0][0][1][0].get('href') #oh isn´t this a fun way!
-        opinions_record['pdf_url'] = 'http://www.europarl.europa.eu' + o[2][1][0][0][1][0].get('href').replace('+WORD+','+PDF+')
-        opinions_record['mep_last_name'] = lastname
-        opinions_record['mep_first_name'] = firstname
-        opinions_record['id'] = id        
-        scraperwiki.sqlite.save(['id', 'subject'], data=opinions_record, table_name='opinions')
-
-    current_page = root.xpath ('//a[@class="selector_selected"]')
-    if current_page:
-        next_page_number = int(current_page[0].text)+1
-        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
-        next_page_link = root.xpath (xpath)
-        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
-        if next_page_link:
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
-            opinion_collection(next_page_link,id,firstname,lastname)
-        elif next_page_link2:
-            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
-            opinion_collection(next_page_link,id,firstname,lastname)
-        else:
-            return
-
+#OPINIONS COLLECTION - commented out DAVIDE
+#def opinion_collection(activity_url,id,firstname,lastname):
+#    html = scraperwiki.scrape(activity_url)
+#    root = lxml.html.fromstring(html)
+#    opinions = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
+#    for o in opinions:
+#        opinions_record = {}
+#        opinions_record['subject'] = o[4][0].text.strip()
+#        opinions_record['committee'] = o[5][0].text.strip()
+#        opinions_record['date'] = o[2][0].text.strip()
+#        opinions_record['word_url'] = 'http://www.europarl.europa.eu' + o[2][1][0][0][1][0].get('href') #oh isn´t this a fun way!
+#        opinions_record['pdf_url'] = 'http://www.europarl.europa.eu' + o[2][1][0][0][1][0].get('href').replace('+WORD+','+PDF+')
+#        opinions_record['mep_last_name'] = lastname
+#        opinions_record['mep_first_name'] = firstname
+#        opinions_record['id'] = id        
+#        scraperwiki.sqlite.save(['id', 'subject'], data=opinions_record, table_name='opinions')
+#
+#    current_page = root.xpath ('//a[@class="selector_selected"]')
+#    if current_page:
+#        next_page_number = int(current_page[0].text)+1
+#        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
+#        next_page_link = root.xpath (xpath)
+#        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
+#        if next_page_link:
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
+#            opinion_collection(next_page_link,id,firstname,lastname)
+#        elif next_page_link2:
+#            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
+#            opinion_collection(next_page_link,id,firstname,lastname)
+#        else:
+#            return
+#
 #SPEECHES COLLECTION
-def speeches_collection(activity_url,id,firstname,lastname):
-    html = scraperwiki.scrape(activity_url)
-    root = lxml.html.fromstring(html)
-    speeches = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
-    for s in speeches:
-        speeches_record = {}
-        speeches_record['subject'] = s[1][0].text.strip()
-        speeches_record['date'] = s[2][0].text.strip()
-        speeches_record['detail_url'] = 'http://www.europarl.europa.eu' +s[2][1][0][0][0][0].get('href') 
-        speeches_record['mep_last_name'] = lastname
-        speeches_record['mep_first_name'] = firstname
-        speeches_record['id'] = id        
-
-        scraperwiki.sqlite.save(['id', 'subject'], data=speeches_record, table_name='speeches')
-
-    current_page = root.xpath ('//a[@class="selector_selected"]')
-    if current_page:
-        next_page_number = int(current_page[0].text)+1
-        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
-        next_page_link = root.xpath (xpath)
-        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
-        if next_page_link:
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
-            speeches_collection(next_page_link,id,firstname,lastname)
-        elif next_page_link2:
-            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
-            speeches_collection(next_page_link,id,firstname,lastname)
-        else:
-            return
-        
+#def speeches_collection(activity_url,id,firstname,lastname):
+#    html = scraperwiki.scrape(activity_url)
+#    root = lxml.html.fromstring(html)
+#    speeches = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
+#    for s in speeches:
+#        speeches_record = {}
+#        speeches_record['subject'] = s[1][0].text.strip()
+#        speeches_record['date'] = s[2][0].text.strip()
+#        speeches_record['detail_url'] = 'http://www.europarl.europa.eu' +s[2][1][0][0][0][0].get('href') 
+#        speeches_record['mep_last_name'] = lastname
+#        speeches_record['mep_first_name'] = firstname
+#        speeches_record['id'] = id        
+#
+#        scraperwiki.sqlite.save(['id', 'subject'], data=speeches_record, table_name='speeches')
+#
+#    current_page = root.xpath ('//a[@class="selector_selected"]')
+#    if current_page:
+#        next_page_number = int(current_page[0].text)+1
+#        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
+#        next_page_link = root.xpath (xpath)
+#        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
+#        if next_page_link:
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
+#            speeches_collection(next_page_link,id,firstname,lastname)
+#        elif next_page_link2:
+#            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
+#            speeches_collection(next_page_link,id,firstname,lastname)
+#        else:
+#            return
+#        
 #REPORTS COLLECTION
-def reports_collection(activity_url,id,firstname,lastname):
-    html = scraperwiki.scrape(activity_url)
-    root = lxml.html.fromstring(html)
-    reports = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
-    for r in reports:
-        reports_record = {}
-        reports_record['subject'] = r[4][0].text.strip()
-        reports_record['committee'] = r[3][0].text.strip()
-        reports_record['date'] = r[2][0].text.strip()
-        reports_record['word_url'] = 'http://www.europarl.europa.eu' + r[2][1][0][0][1][0].get('href') #oh isn´t this a fun way!
-        reports_record['pdf_url'] = 'http://www.europarl.europa.eu' + r[2][1][0][0][1][0].get('href').replace('+WORD+','+PDF+')
-        reports_record['mep_last_name'] = lastname
-        reports_record['mep_first_name'] = firstname
-        reports_record['id'] = id        
-        scraperwiki.sqlite.save(['id', 'subject'], data=reports_record, table_name='reports')
-
-    current_page = root.xpath ('//a[@class="selector_selected"]')
-    if current_page:
-        next_page_number = int(current_page[0].text)+1
-        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
-        next_page_link = root.xpath (xpath)
-        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
-        if next_page_link:
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
-            reports_collection(next_page_link,id,firstname,lastname)
-        elif next_page_link2:
-            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
-            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
-            reports_collection(next_page_link,id,firstname,lastname)
-        else:
-            return
-
+#def reports_collection(activity_url,id,firstname,lastname):
+#    html = scraperwiki.scrape(activity_url)
+#    root = lxml.html.fromstring(html)
+#    reports = root.xpath ('//table[@class="longlistdark"] | //table[@class="longlistlight"]')
+#    for r in reports:
+#        reports_record = {}
+#        reports_record['subject'] = r[4][0].text.strip()
+#        reports_record['committee'] = r[3][0].text.strip()
+#        reports_record['date'] = r[2][0].text.strip()
+#        reports_record['word_url'] = 'http://www.europarl.europa.eu' + r[2][1][0][0][1][0].get('href') #oh isn´t this a fun way!
+#        reports_record['pdf_url'] = 'http://www.europarl.europa.eu' + r[2][1][0][0][1][0].get('href').replace('+WORD+','+PDF+')
+#        reports_record['mep_last_name'] = lastname
+#        reports_record['mep_first_name'] = firstname
+#        reports_record['id'] = id        
+#        scraperwiki.sqlite.save(['id', 'subject'], data=reports_record, table_name='reports')
+#
+#    current_page = root.xpath ('//a[@class="selector_selected"]')
+#    if current_page:
+#        next_page_number = int(current_page[0].text)+1
+#        xpath='//a[@class="selector_lnk" and contains(text(),"'+str(next_page_number)+'")]'
+#        next_page_link = root.xpath (xpath)
+#        next_page_link2 = root.xpath('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]') #more than 15 result pages
+#        if next_page_link:
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0].get('href') 
+#            reports_collection(next_page_link,id,firstname,lastname)
+#        elif next_page_link2:
+#            next_page_link = root.xpath ('//img[@src="/img/cont/activities/navigation/navi_next_activities.gif"]/../..')
+#            next_page_link = 'http://www.europarl.europa.eu' + next_page_link[0][0].get('href') 
+#            reports_collection(next_page_link,id,firstname,lastname)
+#        else:
+#            return
+#
 #MEP INDIVIDUAL INFO COLLECTION
 def info_collection(url,firstname,lastname,id):
     record = {}
