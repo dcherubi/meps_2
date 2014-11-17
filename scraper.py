@@ -214,6 +214,7 @@ def info_collection(url,firstname,lastname,id):
     record['detail_url'] = url
     record['firstname'] = firstname
     record['lastname'] = lastname
+    record['country'] = country
     #record['country'] = country[0].strip()
     record['en_party_name'] = party[0].text_content().strip()
     record['en_party_role'] = party[1].text_content().strip()
